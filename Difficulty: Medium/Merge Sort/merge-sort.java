@@ -1,50 +1,49 @@
 class Solution {
 
     void mergeSort(int arr[], int l, int r) {
-        // code here
-        if(l>=r){
-            return;
+
+        // base condition
+        if (arr.length <= 1) return;
+
+        int n = arr.length;
+
+        // split arrays
+        int[] a = new int[n / 2];
+        int[] b = new int[n - n / 2];
+
+        int idx = 0;
+
+        for (int i = 0; i < a.length; i++) {
+            a[i] = arr[idx++];
         }
-        int mid = l + (r-l)/2; //find mid 
-        mergeSort(arr,l,mid); // left 
-        mergeSort(arr,mid+1,r);//right
-        merge(arr,l , mid, r); //merge
-      
+
+        for (int i = 0; i < b.length; i++) {
+            b[i] = arr[idx++];
+        }
+
+        // recursive calls (same style)
+        mergeSort(a, 0, a.length - 1);
+        mergeSort(b, 0, b.length - 1);
+
+        // merge back into arr
+        merge(a, b, arr);
     }
-    void merge(int arr[],int l,int mid,int r){
-        int leftSize = mid-l +1;
-        int rightSize = r-mid;
-        int left[] = new int[leftSize];
-        int right[] = new int[rightSize];
-        // copy laft rnd raight arr
-        for(int i = 0;i<leftSize;i++){
-            left[i] = arr[l+i];
+
+    static void merge(int[] a, int[] b, int[] c) {
+
+        int i = 0, j = 0, k = 0;
+
+        while (i < a.length && j < b.length) {
+            if (a[i] <= b[j])
+                c[k++] = a[i++];
+            else
+                c[k++] = b[j++];
         }
-        for(int i= 0;i<rightSize;i++){
-            right[i] = arr[mid+1+i];
-        }
-        int i = 0, j = 0, k = l;
-        while(i<leftSize && j <rightSize){
-            if(left[i] < right[j]){
-                arr[k] = left[i];
-                i++;
-            }else{
-                arr[k] = right[j];
-                j++;
-            }
-            k++;
-        }
-        while(i<leftSize){
-            arr[k] = left[i];
-            i++;
-            k++;
-        }
-        while(j<rightSize){
-            arr[k] = right[j];
-            j++;
-            k++;
-        }
-        
-        
+
+        while (i < a.length)
+            c[k++] = a[i++];
+
+        while (j < b.length)
+            c[k++] = b[j++];
     }
 }
