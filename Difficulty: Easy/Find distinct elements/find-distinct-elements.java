@@ -2,10 +2,12 @@
 class Solution {
     static int distinct(int arr[]) {
         // code here
-        HashSet<Integer> hs = new HashSet<>();
-        for(int nums:arr){
-            hs.add(nums);
+        HashSet<Integer>set = new HashSet<>();
+        
+        for(int x:arr){
+            set.add(x);
+            
         }
-        return hs.size();
+        return set.size();
     }
 }
